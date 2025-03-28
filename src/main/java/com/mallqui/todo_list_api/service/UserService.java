@@ -31,6 +31,11 @@ public class UserService implements UserDetailsService {
                 Collections.singleton(authority)
         );
     }
+    //Buscar usuario
+    public User findByName(String userName) {
+        return userRepository.findByName(userName)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
+    }
 
     public boolean existsByUsername(String userName){
         return userRepository.existsByName(userName);
