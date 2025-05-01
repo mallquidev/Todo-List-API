@@ -12,13 +12,14 @@ import java.util.Collections;
 
 @Service
 public class UserService implements UserDetailsService {
-    private final UserRepository userRepository;
+    //5
+    private UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    @Override
+    @Override //Sobreescribir metodo del metodo UserDetailsService
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException{
         User user = userRepository.findByName(userName)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
@@ -36,11 +37,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findByName(userName)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
     }
-
+    //existe el usuario?
     public boolean existsByUsername(String userName){
         return userRepository.existsByName(userName);
     }
-
+    //guardar
     public void save(User user){
         userRepository.save(user);
     }

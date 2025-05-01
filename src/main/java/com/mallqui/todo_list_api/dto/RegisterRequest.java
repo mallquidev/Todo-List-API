@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RegisterRequest {
+    //4
     private String userName;
-    private String password;
+    private String password; //campos que el usuario debe enviar para registrarse en el sitema
 }

@@ -9,8 +9,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import java.io.IOException;
 
 public class JwtEntryPoint implements AuthenticationEntryPoint {
-
-    @Override
+    //7 Punto de entrada jwt
+    @Override//sobreescribir metodo
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException{
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No Autorizado");
     }
