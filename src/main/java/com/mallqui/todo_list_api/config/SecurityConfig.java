@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -57,7 +58,8 @@ public class SecurityConfig {
                     auth.anyRequest().authenticated();
                 })
                 //Maneja errores de autenticacion con nuestra clase personalizada JwtEntryPoint
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtEntryPoint()));
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtEntryPoint()))
+                .addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
     //Define un bean de AuthenticationManager, necesario para la autenticacion con login
