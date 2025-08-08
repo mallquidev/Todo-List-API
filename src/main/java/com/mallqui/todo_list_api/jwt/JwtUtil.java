@@ -52,19 +52,19 @@ public class JwtUtil {
     }
 
     public String extractUsername(String token){
-        return extractAllClaims(token).getSubject();
+        return extractAllClaims(token).getSubject(); //Extrae el nombre de usuario que está guardado dentro del token.
+    }                                                //¿Por qué se usa? Porque cuando alguien hace una petición con un JWT, necesitas saber quién es ese usuario.
+
+    public Date extractExpiration(String token){        //Extrae la fecha de expiración del token.
+        return extractAllClaims(token).getExpiration(); //¿Por qué se usa? Para saber si el token todavía es válido o ya caducó.
     }
 
-    public Date extractExpiration(String token){
-        return extractAllClaims(token).getExpiration();
+    public boolean isTokenExpired(String token){            //Verifica si el token ya expiró.
+        return extractExpiration(token).before(new Date()); //¿Por qué se usa? Porque no puedes aceptar tokens vencidos. Esto protege tu API de accesos no autorizados.
     }
 
-    public boolean isTokenExpired(String token){
-        return extractExpiration(token).before(new Date());
-    }
-
-    public boolean validateToken(String token, UserDetails userDetails) {
-        final String userName = extractUsername(token);
+    public boolean validateToken(String token, UserDetails userDetails) { //Verifica si el token es válido para el usuario que lo está usando.
+        final String userName = extractUsername(token);                   //¿Por qué se usa? Porque no basta con que el token exista: Debes confirmar que pertenece al usuario correcto y que no está vencido.
 
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
